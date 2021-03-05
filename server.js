@@ -10,15 +10,15 @@ app.get("/", function (req, res) {
 
 io.on("connection", function (socket) {
   console.log(`${socket.id} connected`);
-  socket.on("chat message", function (msg) {
-    if (msg === "") {
+  socket.on("onSendSpeech", function ({ userName, message }) {
+    if (message === "") {
     } else {
-      io.emit("send message", `${socket.id}: ${msg}`);
-      console.log(`${socket.id}: ${msg}`);
+      io.emit("onReceiveSpeech", { userName, message });
+      console.log(`${userName}: ${message}`);
     }
   });
 });
 
-http.listen(PORT || 5000, function () {
-  console.log("listening on 5000,");
+http.listen(PORT, function () {
+  console.log(`listening on ${PORT}`);
 });
