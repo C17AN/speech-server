@@ -5,17 +5,17 @@ var io = require("socket.io")(http);
 const PORT = process.env.PORT;
 
 app.get("/", function (req, res) {
-  res.send("Hello World!");
+  res.send("채팅 서버 오픈");
+});
 
-  io.on("connection", function (socket) {
-    console.log(`${socket.id} connected`);
-    socket.on("onSendSpeech", function ({ userName, message }) {
-      if (message === "") {
-      } else {
-        io.emit("onReceiveSpeech", { userName, message });
-        console.log(`${userName}: ${message}`);
-      }
-    });
+io.on("connection", function (socket) {
+  console.log(`${socket.id} connected`);
+  socket.on("onSendSpeech", function ({ userName, message }) {
+    if (message === "") {
+    } else {
+      io.emit("onReceiveSpeech", { userName, message });
+      console.log(`${userName}: ${message}`);
+    }
   });
 });
 
